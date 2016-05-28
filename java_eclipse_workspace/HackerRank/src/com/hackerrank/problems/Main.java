@@ -4,9 +4,101 @@ import java.util.Stack;
 
 public class Main {
 	public static void main(String[] args) {
-		findMergeNode();
+		heightOfABinaryTree();
 	}
 	
+	static void heightOfABinaryTree() {
+		Node root = new Node(3, new Node(2, new Node(1)), new Node(5, new Node(4), new Node(6, null, new Node(7))));
+		System.out.println(height(root));
+	}
+	
+	static int height(Node root){
+		return maxHeight(root, 0);
+	}
+	
+	static int maxHeight( Node root, int currentHeight ){
+		int leftHeight = 0,
+			rightHeight = 0;
+		
+		if(root == null) return currentHeight-1;
+		
+		leftHeight = maxHeight(root.next, currentHeight+1);
+		rightHeight = maxHeight(root.prev, currentHeight+1);
+		
+		return Math.max(leftHeight, rightHeight);
+	}
+
+	static void mergeTwoLinkedLists(){
+		Node headA1 = new Node(1, new Node(3, new Node(5, new Node(6)))),
+			 headB1 = new Node(2, new Node(4, new Node(7))),
+
+			 headA2 = new Node(15),
+			 headB2 = new Node(12),
+			 
+			 headA3 = null,
+			 headB3 = new Node(1, new Node(2)),
+			 
+			 headA4 = new Node(2),
+			 headB4 = new Node(1, new Node(2)),
+			 
+			 headA5 = new Node(1, new Node(3, new Node(5, new Node(6)))),
+			 headB5 = new Node(8, new Node(9, new Node(11, new Node(15)))),
+			 
+			 headA6 = new Node(8, new Node(9, new Node(11, new Node(15)))),
+			 headB6 = new Node(1);
+		
+		print(mergeLists(headA5, headB5));
+	}
+	
+	/**
+	 * 1 -> 3 -> 5 -> 6 -> NULL
+	 * 2 -> 4 -> 7 -> NULL
+	 *
+	 * 15 -> NULL
+	 * 12 -> NULL
+	 *
+	 * NULL 
+	 * 1 -> 2 -> NULL
+	 * 
+	 * 2 -> NULL
+	 * 1 -> 2 -> NULL
+	 * 
+	 * 1 -> 3 -> 5 -> 6 -> NULL
+	 * 8 -> 9 -> 11 -> 15 -> NULL
+	 * 
+	 * 8 -> 9 -> 11 -> -> 15 -> NULL
+	 * 1 -> NULL
+	 * 
+	 * @param headA
+	 * @param headB
+	 * @return
+	 */
+	static Node mergeLists( Node headA, Node headB ){
+		if( headA == null ) return headB;
+		if( headB == null ) return headA;
+		
+		if( headA.data < headB.data ){
+			headA.next = mergeLists( headA.next, headB );
+			return headA;
+		}else{
+			headB.next = mergeLists( headA, headB.next);
+			return headB;
+		}
+	}
+
+	static Node mergeListsIterative( Node headA, Node headB ){
+		if( headA == null ) return headB;
+		if( headB == null ) return headA;
+		
+		if( headA.data < headB.data ){
+			headA.next = mergeLists( headA.next, headB );
+			return headA;
+		}else{
+			headB.next = mergeLists( headA, headB.next);
+			return headB;
+		}
+	}
+
 	static void findMergeNode(){
 		Node headA = new Node(0),
 		 	 headB = new Node(0),
