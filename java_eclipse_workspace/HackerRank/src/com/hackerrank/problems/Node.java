@@ -28,4 +28,18 @@ public class Node {
 	public String toString(){
 		return Integer.toString(data);
 	}
+	
+	public String printList(){
+		Node tmp = this;
+		StringBuffer b = new StringBuffer();
+		
+		while(tmp != null) {
+			b.append(tmp + "-->");
+			tmp = tmp.next;
+		}
+		
+		b.append("NULL");
+		
+		return b.toString(); 
+	}
 }

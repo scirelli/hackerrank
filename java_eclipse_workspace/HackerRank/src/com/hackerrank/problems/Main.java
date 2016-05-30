@@ -4,9 +4,55 @@ import java.util.Stack;
 
 public class Main {
 	public static void main(String[] args) {
-		heightOfABinaryTree();
+		diagonalDifference();
+	}
+
+	static void diagonalDifference(){
+		int	d1=0, d2=0, n=3;
+		int a[][] = {
+				{11,2,4},
+				{4,5,6},
+				{10,8,-12}
+		};
+		
+		for(int i=0; i<n; i++){
+			d1 += a[i][i];
+			d2 += a[i][(n-1)-i];                
+		}
+		System.out.println(Math.abs(d1-d2));
 	}
 	
+	static void insertANode(){
+		Node head = new Node();
+		head.data = 5;
+		head.next = new Node(3);
+		
+		System.out.println(insertNth(head, 1, 1).printList());
+	}
+	static Node insertNth(Node head, int data, int position) {
+	    Node tmp = head,
+	         prev = head;
+	    
+	    if(head == null || position == 0){
+	       head = new Node();
+	       head.data = data;
+	       head.next = tmp;
+	       return head;
+	   }
+	   
+	   while(position > 0 && tmp != null ){
+	       prev = tmp;
+	       tmp = tmp.next;
+	       position--;
+	   }
+
+	   prev.next = new Node();
+	   prev.next.data = data;
+	   prev.next.next = tmp;
+	    
+	   return head;
+	}	
+
 	static void heightOfABinaryTree() {
 		Node root = new Node(3, new Node(2, new Node(1)), new Node(5, new Node(4), new Node(6, null, new Node(7))));
 		System.out.println(height(root));
