@@ -21,10 +21,23 @@ function readLine() {
 /////////////// ignore above this line ////////////////////
 
 function main() {
-    var n = parseInt(readLine());
+    var n = parseInt(readLine()),
+        cntSorted = (new Array(100)).fill('');
     for(var a0 = 0; a0 < n; a0++){
         var x_temp = readLine().split(' ');
         var x = parseInt(x_temp[0]);
         var s = x_temp[1];
+        
+        if(a0 < Math.floor(n/2)){
+            s = '-';
+        }
+        
+        if(cntSorted[x]){
+            cntSorted[x] = cntSorted[x] + ' ' + s;
+        }else{
+            cntSorted[x] = s;
+        }
     }
+    
+    console.log( cntSorted.filter((s)=>{ return s != ''; }).join(' ') );
 }
