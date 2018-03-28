@@ -21,7 +21,26 @@ function readLine() {
 /////////////// ignore above this line ////////////////////
 
 function closestNumbers(arr) {
-    // Complete this function
+    let curMin = 2 * Math.pow(10,7) + 1,
+        pairs = [];
+
+    arr = arr.sort(function(a,b){
+        return a - b;
+    });
+
+    for(let i=0, l=arr.length - 1, diff; i<l; i++) {
+        diff = arr[i+1] - arr[i];
+
+        if( diff < curMin ){
+            curMin = diff;
+            pairs = [arr[i], arr[i+1]];
+        }else if( diff === curMin ){
+            curMin = diff;
+            pairs.push(arr[i], arr[i+1]);
+        }
+    }
+
+    return pairs;
 }
 
 function main() {
