@@ -39,26 +39,21 @@ function pivot(array, leftIndex, pivotIndex) {
 // 1 3 9 8 2 7 5
 //   i j
 function insertionSort2(n, arr) {
-    for(let j=1, l=arr.length, tmp,ins; j<l; j++){
-        tmp = arr[j];
-        ins = false;
-        for(let i=j-1, itm; i>=0; i--){
-            itm = arr[i];
-            
-            if(itm > tmp){
-                arr[i+1] = itm;
-                shifts++;
-                continue;
-            }else {
-                arr[i+1] = tmp;
-                ins = true;
-                break;
-            }
-        }
-        if(!ins){
-            arr[0] = tmp;
+    var i = 0,
+        j = 0,
+        tmp;
+
+    while( i < arr.length){
+        j = i;
+
+        while( j>0 && arr[j-1] > arr[j] ){
+            tmp = arr[j];
+            arr[j] = arr[j-1]
+            arr[j-1] = tmp;
             shifts++;
+            j--;
         }
+        i++
     }
 }
 
