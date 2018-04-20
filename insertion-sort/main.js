@@ -56,6 +56,7 @@ function insertionSort2(arr) {
     return swaps;
 }
 
+var swaps = 0;
 function mergeSort(arr){
     if(!Array.isArray(arr)) return [];
     if(arr.length <= 1) return arr;
@@ -75,6 +76,7 @@ function mergeSort(arr){
     while(leftIndex < leftLength && rightIndex < rightLength){
         if(left[leftIndex] > right[rightIndex]){
             output.push(right[rightIndex]);
+            swaps+=rightIndex;
             rightIndex++;
         }else if(left[leftIndex] < right[rightIndex]){
             output.push(left[leftIndex]);
@@ -87,6 +89,7 @@ function mergeSort(arr){
         }
     }
 
+    swaps+= ((left.length)-leftIndex) * rightIndex;
     if(leftIndex < left.length){
         for(; leftIndex<left.length; leftIndex++){
             output.push(left[leftIndex]);
@@ -100,14 +103,77 @@ function mergeSort(arr){
     return output;
 }
 
+var inversions = 0;
+function getInversions(nums, left, right) {
+  if (left < right) {
+    //Split in half
+    var mid = Math.floor((left + right) / 2);
+    //Sort recursively.
+    getInversions(nums, left, mid);
+    getInversions(nums, mid + 1, right);
+    //Merge the two sorted sub arrays.
+    merge(nums, left, mid, right);
+  }
+}
+ 
+function merge(nums, left, mid, right) {
+    var leftLength = mid - left + 1,
+        rightLength = right - mid,
+        leftArray = [],
+        rightArray = [];
+
+    for (var i = 0; i < leftLength; i++) {
+        leftArray[i] = nums[left + i];
+    }
+    for (var i = 0; i < rightLength; i++) {
+        rightArray[i] = nums[mid + 1 + i];
+    }
+
+    var leftIndex = 0, rightIndex = 0, k = left;
+    while (leftIndex < leftLength && rightIndex < rightLength) {
+        if (leftArray[leftIndex] <= rightArray[rightIndex]) {
+            nums[k] = leftArray[leftIndex];
+            inversions += rightIndex;
+            leftIndex++;
+        } else {
+            nums[k] = rightArray[rightIndex];
+            rightIndex++;
+        }
+        k++;
+    }
+
+    //remaining iversions
+    inversions += rightIndex * (leftLength - leftIndex);
+    if (leftIndex >= leftLength) {
+        //copy remaining elements from right
+        for (; rightIndex < rightLength; rightIndex++, k++) {
+            nums[k] = rightArray[rightIndex];
+        }
+    } else {
+        //copy remaining elements from left
+        for (; leftIndex < leftLength; leftIndex++, k++) {
+            nums[k] = leftArray[leftIndex];
+        }
+    }
+}
+
 function main() {
     var t = parseInt(readLine());
     for(var a0 = 0; a0 < t; a0++){
+        swaps = 0;
+        inversions = 0;
         var n = parseInt(readLine());
         arr = readLine().split(' ');
         arr = arr.map(Number);
-        //var result = insertionSort2(arr);
-        var result = mergeSort(arr);
-        process.stdout.write("" + result + "\n");
+
+        console.log(arr);
+        var result1 = insertionSort2(arr.slice(0));
+        process.stdout.write("insertion swaps: " + result1 + "\n");
+
+        mergeSort(arr.slice(0));
+        process.stdout.write("merge swaps: " + swaps + "\n");
+
+        getInversions(arr.slice(0), 0, arr.length-1);
+        process.stdout.write("merge2 swaps: " + inversions + "\n\n\n");
     }
 }
