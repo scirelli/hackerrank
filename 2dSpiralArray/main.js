@@ -126,6 +126,7 @@ function up(array, state, WIDTH){
 print(spiral(3), 3);
 print(spiral(4), 4);
 print(spiral(8), 8);
+print(spiral(1), 1);
 
 
 function xyToIndex(x, y, width){
