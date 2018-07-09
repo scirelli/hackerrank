@@ -173,6 +173,13 @@ function countTriplets(arr, r) {
     return cnt;
 }
  */
+/*
+hash: {n: [0, 0, 0]} #[singlet_count, doublet_count, triplet_count]
+hash[n][2] += hash[n / r][1]
+hash[n][1] += hash[n / r][0]
+hash[n][0] += 1
+ans = sumofalltriplets(n[2])
+ */
 function countTriplets(arr, r){
     let count = 0,
         preMap = {},
@@ -181,10 +188,9 @@ function countTriplets(arr, r){
     for(let n of arr){
         if(n % r === 0){
             let previousNum = n/r;
-            let cnt2 = preMap[previousNum];
 
-            if(cnt2 !== undefined){
-                count += cnt2;
+            if(preMap[previousNum] !== undefined){
+                count += preMap[previousNum];
             }
 
             let cnt1 = map[previousNum];
