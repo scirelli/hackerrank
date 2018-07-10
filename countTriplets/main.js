@@ -179,6 +179,15 @@ hash[n][2] += hash[n / r][1]
 hash[n][1] += hash[n / r][0]
 hash[n][0] += 1
 ans = sumofalltriplets(n[2])
+
+For example, if we have arr = [3, 9, 9, 27]
+
+Here, index 0 = no. of singlets, 1 = no. of doublets, 2 = no. of triplets
+
+For 3, we have  [1, 0, 0]
+For 9, we have  [1, 1, 0] #(3, 9) - Doublet
+For 9, we have  [2, 2, 0] #We now have two doublets, the previous one and the current one with the second 9 - (3, 9) & (3,9)
+For 27, we have [1, 2, 2] # We have two doublets (9, 27), (9, 27) and two triplets (3, 9, 27).
  */
 function countTriplets(arr, r){
     let count = 0,
